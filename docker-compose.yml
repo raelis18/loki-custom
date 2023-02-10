@@ -1,0 +1,34 @@
+services:
+  loki:
+    image: grafana/loki:2.7.3
+    volumes:
+     - ./loki-config.yml:/etc/loki/loki-config.yml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.7.3
+    volumes:
+      - /var/log:/var/log
+      - ./promtail-config.yml:/etc/promtail/promtail-config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  nginx:
+    image: laurentbel/nginx-basic-auth
+    ports:
+      - "80:80"
+    depends_on:
+      - loki
+    environment: 
+      - FORWARD_HOST=loki
+      - FORWARD_PORT=3100
+      - BASIC_USERNAME=xcenter
+      - BASIC_PASSWORD=xc3nt3rl1nx
+    networks:
+      - loki
+
+networks:
+  loki:

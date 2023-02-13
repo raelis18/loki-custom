@@ -1,11 +1,9 @@
-version:v3
-
 services:
   loki:
     image: grafana/loki:2.7.3
     volumes:
-     - "loki-config.yml:/etc/loki/loki-config.yml"
-    command: -config.file=/etc/loki/local-config.yml
+     - "./loki-config.yml:/etc/loki/loki-config.yml"
+    command: -config.file=/etc/loki/loki-config.yml
     networks:
       - loki
 
@@ -13,8 +11,8 @@ services:
     image: grafana/promtail:2.7.3
     volumes:
       - "/var/log:/var/log"
-      - "promtail-config.yml:/etc/promtail/promtail-config.yml"
-    command: -config.file=/etc/promtail/config.yml
+      - "./promtail-config.yml:/etc/promtail/promtail-config.yml"
+    command: -config.file=/etc/promtail/promtail-config.yml
     networks:
       - loki
 

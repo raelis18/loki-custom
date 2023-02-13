@@ -1,5 +1,3 @@
-version: v3
-
 services:
   loki:
     image: grafana/loki:2.7.3

@@ -19,7 +19,7 @@ services:
   nginx:
     image: laurentbel/nginx-basic-auth
     ports:
-      - "80:80"
+      - "3337:80"
     depends_on:
       - loki
     environment: 

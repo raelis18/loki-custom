@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: promtail
+  labels:
+    app: promtal
+spec:
+  containers:
+    - name: promtail
+      image: grafana/promtail:2.7.3
+      volumes:
+        - name: promtail-config-path
+          hostPath: ./promtail-config.yml
+          path: /etc/promtail/promtail-config.yml
+        - name: promtail-logs
+          hostPath: /var/log
+          path: /var/log
+      command: ["-config.file=/etc/loki/loki-config.yml"]

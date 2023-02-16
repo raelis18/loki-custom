@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-proxy
+  labels:
+    app: ngiinx-proxy
+spec:
+  containers:
+    - name: nginx-proxy
+      image: laurentbel/nginx-basic-auth
+      ports:
+        - containerPort: 80
+      env:
+        - FORWARD_HOST=loki
+        - FORWARD_PORT=3100
+        - BASIC_USERNAME=xcenter
+        - BASIC_PASSWORD=xc3nt3rl1nx
+      volumes:
+        - name: nginx-logs
+          hostPath: /var/log/nginx
+          path: /var/log/nginx

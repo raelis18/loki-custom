@@ -16,10 +16,14 @@ spec:
       ports:
         - containerPort: 80
       env:
-        - FORWARD_HOST=loki
-        - FORWARD_PORT=3100
-        - BASIC_USERNAME=xcenter
-        - BASIC_PASSWORD=xc3nt3rl1nx
+        - name: FORWARD_HOST
+          value: loki
+        - name: FORWARD_PORT
+          value: "3100"
+        - name: BASIC_USERNAME
+          value: xcenter
+        - name: BASIC_PASSWORD
+          value: xc3nt3rl1nx
       volumeMounts:
         - name: nginx-logs
           mountPath: /var/log/nginx

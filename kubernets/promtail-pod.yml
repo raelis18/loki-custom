@@ -22,4 +22,4 @@ spec:
           mountPath: /etc/promtail/
         - name: promtail-logs
           mountPath: /var/logs/
-  command: ["-config.file=/etc/loki/loki-config.yml"]
+      command: ["-config.file=/etc/loki/loki-config.yml"]

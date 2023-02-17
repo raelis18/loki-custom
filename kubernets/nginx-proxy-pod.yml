@@ -5,6 +5,11 @@ metadata:
   labels:
     app: ngiinx-proxy
 spec:
+  volumes:
+    - name: nginx-logs
+      hostPath:
+       path: /var/log/nginx
+       type: FileOrCreate
   containers:
     - name: nginx-proxy
       image: laurentbel/nginx-basic-auth
@@ -15,7 +20,6 @@ spec:
         - FORWARD_PORT=3100
         - BASIC_USERNAME=xcenter
         - BASIC_PASSWORD=xc3nt3rl1nx
-  volumes:
-    - name: nginx-logs
-      hostPath: /var/log/nginx
-      path: /var/log/nginx
+      volumeMounts:
+        - name: nginx-logs
+          mountPath: /var/log/nginx

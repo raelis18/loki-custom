@@ -3,16 +3,23 @@ kind: Pod
 metadata:
   name: promtail
   labels:
-    app: promtal
+    app: promtail
 spec:
+  volumes:
+    - name: promtail-config-path
+      hostPath:
+        path: ./promtail-config.yml
+        type: FileOrCreate
+    - name: promtail-logs
+      hostPath:
+        path: /var/log
+        type: FileOrCreate
   containers:
     - name: promtail
       image: grafana/promtail:2.7.3
-  volumes:
-    - name: promtail-config-path
-      hostPath: ./promtail-config.yml
-      path: /etc/promtail/promtail-config.yml
-    - name: promtail-logs
-      hostPath: /var/log
-      path: /var/log
+      volumeMounts:
+        - name: promtail-config-path
+          mountPath: /etc/promtail/
+        - name: promtail-logs
+          mountPath: /var/logs/
   command: ["-config.file=/etc/loki/loki-config.yml"]

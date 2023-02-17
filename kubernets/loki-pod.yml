@@ -6,12 +6,16 @@ metadata:
     app: loki
 spec:
   volumes:
-    - name: loki-config-path
-      hostPath: ./loki-config.yml
-      path: /etc/loki/loki-config.yml
+    - name: loki-config
+      hostPath:
+       path: ./loki-config.yml
+       type: FileOrCreate
   containers:
     - name: loki
       image: grafana/loki:2.7.3
       ports:
         - containerPort: 3100
+      volumeMounts:
+        - name: loki-config
+          mountPath: /etc/loki/
       command: ["-config.file=/etc/loki/loki-config.yml"]
